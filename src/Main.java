@@ -33,13 +33,19 @@ public class Main {
                         System.out.print("\nНеправильный номер товара\n");
                         continue;
                     }
-                    if (itemCount <= 0) {
-                        System.out.println("\nКоличество товара должно быть > 0");
+                    if ((goods[selectedItem - 1].getInBasket() + itemCount) < 0) { // сравнение с разницей вместо количества
+                        System.out.println("\nКоличество товара в корзине не должно быть < 0");
                         continue;
                     }
-                    totalPrice -= goodsValue(goods[selectedItem - 1]);  // Тотал минус стоимость текущего товара в корзине
-                    goods[selectedItem - 1].incItemInBasket(itemCount);
-                    totalPrice += goodsValue(goods[selectedItem - 1]);
+                    if (itemCount == 0) {//если ввели 0, то:
+                        totalPrice -= goodsValue(goods[selectedItem - 1]);//цена всей корзины минус цена продукта в ней
+                        goods[selectedItem - 1].incItemInBasket(itemCount); // количество = 0
+                        goodsValue(goods[selectedItem - 1]); // цена = 0
+                    } else {
+                        totalPrice -= goodsValue(goods[selectedItem - 1]);  // Тотал минус стоимость текущего товара в корзине
+                        goods[selectedItem - 1].incItemInBasket(itemCount);
+                        totalPrice += goodsValue(goods[selectedItem - 1]);
+                    }
                 } catch (NumberFormatException nfe) {
                     // Во вводе что-то отличное от двух целых чисел
                     System.out.println("\nНужно 2 аргумента - 2 целых числа");
