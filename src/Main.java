@@ -31,14 +31,21 @@ public class Main {
                         System.out.print("\nНеправильный номер товара\n");
                         continue;
                     }
-                    if (itemCount <= 0) {
-                        System.out.println("\nКоличество товара должно быть > 0");
+                    if ((goods[selectedItem - 1].getInBasket() + itemCount) < 0) { // сравнение с разницей вместо количества
+                        System.out.println("\nКоличество товара в корзине не должно быть < 0");
                         continue;
                     }
-                    goods[selectedItem - 1].incItemInBasket(itemCount);
-                    totalPrice += itemCount * goods[selectedItem - 1].getPrice();
+                    if (itemCount == 0) {//если ввели 0, то:
+                        totalPrice -= goods[selectedItem - 1].getPriceProduct();//цена всей корзины минус цена продукта в ней
+                        goods[selectedItem - 1].incItemInBasket(itemCount); // количество = 0
+                        goods[selectedItem - 1].priceProduct(itemCount); // цена = 0
+                    } else {
+                        goods[selectedItem - 1].incItemInBasket(itemCount);
+                        goods[selectedItem - 1].priceProduct(itemCount); // общ. цена продукта в корзине
+                        totalPrice += itemCount * goods[selectedItem - 1].getPrice();
+                    }
                 } catch (NumberFormatException nfe) {
-                // Во вводе что-то отличное от двух целых чисел
+                    // Во вводе что-то отличное от двух целых чисел
                     System.out.println("\nНужно 2 аргумента - 2 целых числа");
                 }
             } else if (s.equals("end")) {
