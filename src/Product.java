@@ -2,7 +2,6 @@ public class Product {
     private final String name;
     private final double price;
     private int inBasket = 0;
-
     private boolean isItemOnSale = false;
 
     Product(String name, Double price) {
@@ -28,10 +27,9 @@ public class Product {
         return inBasket;
     }
 
-
-    public void incItemInBasket(int itemsNmb) {
-        this.inBasket = itemsNmb == 0 ? 0 : (inBasket + itemsNmb);
-    } //количество = 0, если ввели 0
+    public void changeItemInBasket(int itemsNmb) {
+        this.inBasket += itemsNmb;
+    }
 
     public boolean onSale() {
         return isItemOnSale;

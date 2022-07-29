@@ -33,19 +33,16 @@ public class Main {
                         System.out.print("\nНеправильный номер товара\n");
                         continue;
                     }
-                    if ((goods[selectedItem - 1].getInBasket() + itemCount) < 0) { // сравнение с разницей вместо количества
-                        System.out.println("\nКоличество товара в корзине не должно быть < 0");
+                    if ((itemCount < 0) && ((goods[selectedItem - 1].getInBasket() + itemCount) < 0)) {
+                        System.out.println("\nТакого Количества данного товара нет в корзине");
                         continue;
                     }
-                    if (itemCount == 0) {//если ввели 0, то:
-                        totalPrice -= goodsValue(goods[selectedItem - 1]);//цена всей корзины минус цена продукта в ней
-                        goods[selectedItem - 1].incItemInBasket(itemCount); // количество = 0
-                        goodsValue(goods[selectedItem - 1]); // цена = 0
-                    } else {
-                        totalPrice -= goodsValue(goods[selectedItem - 1]);  // Тотал минус стоимость текущего товара в корзине
-                        goods[selectedItem - 1].incItemInBasket(itemCount);
-                        totalPrice += goodsValue(goods[selectedItem - 1]);
+                    if (itemCount == 0) {
+                        itemCount -= goods[selectedItem - 1].getInBasket();
                     }
+                    totalPrice -= goodsValue(goods[selectedItem - 1]);  // Тотал минус стоимость текущего товара в корзине
+                    goods[selectedItem - 1].changeItemInBasket(itemCount);
+                    totalPrice += goodsValue(goods[selectedItem - 1]);
                 } catch (NumberFormatException nfe) {
                     // Во вводе что-то отличное от двух целых чисел
                     System.out.println("\nНужно 2 аргумента - 2 целых числа");
@@ -77,7 +74,12 @@ public class Main {
         System.out.println("Товары по акции три по цене двух:");
         System.out.println(goodsOnSale); // Товары по акции
         System.out.printf("ИТОГО Товаров в корзине на %10.2f\n\n", totalPrice);
-        System.out.print("Добавьте товар в корзину (№ и количество<ENTER>) или введите end для завершения.\n");
+        System.out.print("""
+                Добавьте товар в корзину  (№ и количество<ENTER>).
+                Убрать товар из корзины   (№ и количество со знаком <->)
+                Обнулить товар в корзине  (№ и <0>).
+                Для завершения работы введите <end>.
+                """);
     }
 
     static void printBasket() {
