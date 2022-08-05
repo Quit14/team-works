@@ -10,7 +10,7 @@ public class Main {
             new Product("Сгущенка", 127.80, true),
             new Product("Сахар", 75.0)
     };
-    static final int GOODS_IN_SALE_KIT = 3;  // Кратность товара одного типа для учакстия в акции
+    static final int GOODS_IN_SALE_KIT = 3;  // Кратность товара одного типа для участия в акции
     static final int SALE_KIT_PRICE = 2;   // Множитель Стоимости одной "кратности" товара
     static double totalPrice = 0;
 
@@ -95,7 +95,7 @@ public class Main {
     }
 
     /**
-     * Стоимость товара в корзине с учетом участия или неучастия товара d акции
+     * Стоимость товара в корзине с учетом участия или неучастия товара в акции
      */
     static double goodsValue(Product item) {
         double itemsValue;
